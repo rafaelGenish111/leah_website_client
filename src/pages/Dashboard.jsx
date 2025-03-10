@@ -52,6 +52,8 @@ const Dashboard = () => {
       navigate('/dashboard');
     } else if (newValue === 1) {
       navigate('/dashboard/articles');
+    } else if (newValue === 2) {
+      navigate('/dashboard/gallery');
     }
   };
   
