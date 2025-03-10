@@ -12,7 +12,9 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
+import XIcon from '@mui/icons-material/X';
 import { Link as RouterLink } from 'react-router-dom';
+
 
 const Footer = () => {
   return (
@@ -33,7 +35,6 @@ const Footer = () => {
               alt="Leah Genish" 
               style={{ 
                 height: '80px',
-                filter: 'brightness(0) invert(1)'
               }} 
             />
             <Typography variant="h6" gutterBottom>
@@ -95,10 +96,13 @@ const Footer = () => {
               עקבו אחרינו
             </Typography>
             <Box textAlign="right">
+              <IconButton color="inherit" aria-label="x" component={RouterLink} to="/leah-admin-portal"  target="_blank">
+                <XIcon />
+              </IconButton>
               <IconButton color="inherit" aria-label="facebook" component="a" href="https://facebook.com/" target="_blank">
                 <FacebookIcon />
               </IconButton>
-              <IconButton color="inherit" aria-label="instagram" component="a" href="https://instagram.com/" target="_blank">
+              <IconButton color="inherit" aria-label="instagram" component="a" href="https://instagram.com/leah_genish" target="_blank">
                 <InstagramIcon />
               </IconButton>
               <IconButton color="inherit" aria-label="whatsapp" component="a" href="https://wa.me/972549414947" target="_blank">

@@ -4,7 +4,7 @@ import { createTheme } from '@mui/material/styles';
 export const theme = createTheme({
   palette: {
     primary: {
-      main: '#c7b1b5', // Mauve color from logo
+      main: '#d1b3b5', // Mauve color from logo
       light: '#d8c5c9',
       dark: '#a48e92',
     },

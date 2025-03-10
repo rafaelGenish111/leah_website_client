@@ -11,6 +11,21 @@ import { Link as RouterLink } from 'react-router-dom';
 const Home = () => {
   return (
     <Container maxWidth="md">
+          <Paper elevation={2} sx={{ p: 3, mt: 4, direction: 'rtl' }}>
+            <Typography variant="h5" gutterBottom>
+              טיפולי עיסוי ורפלקסולוגיה
+            </Typography>
+            
+            <Typography variant="body1" paragraph>
+              אנו מציעים מגוון טיפולי עיסוי ורפלקסולוגיה המותאמים אישית לצרכים שלכם.
+              הטיפולים שלנו מסייעים להפחתת מתחים, שיפור זרימת הדם, הקלה בכאבים ושיפור הרגשה כללית.
+            </Typography>
+            
+            <Typography variant="body1">
+              לפרטים נוספים ותיאום טיפול, אנא צרו קשר.
+            </Typography>
+      </Paper>
+      
       <Paper elevation={3} sx={{ p: 4, mt: 4, textAlign: 'center', direction: 'rtl' }}>
         <Typography variant="h4" gutterBottom>
           ברוכים הבאים למערכת הצהרות הבריאות
@@ -32,7 +47,7 @@ const Home = () => {
             מילוי הצהרת בריאות חדשה
           </Button>
           
-          <Button 
+          {/* <Button 
             variant="outlined" 
             component={RouterLink} 
             to="/leah-admin-portal" 
@@ -40,23 +55,41 @@ const Home = () => {
             sx={{ mx: 1, mt: { xs: 2, sm: 0 } }}
           >
             כניסה למטפלים
-          </Button>
+          </Button> */}
         </Box>
       </Paper>
       
-      <Paper elevation={2} sx={{ p: 3, mt: 4, direction: 'rtl' }}>
-        <Typography variant="h5" gutterBottom>
-          טיפולי עיסוי ורפלקסולוגיה
+
+      <Paper elevation={3} sx={{ p: 4, mt: 4, textAlign: 'center', direction: 'rtl' }}>
+        <Typography variant="h4" gutterBottom>
+       זימון תורים און ליין
         </Typography>
         
         <Typography variant="body1" paragraph>
-          אנו מציעים מגוון טיפולי עיסוי ורפלקסולוגיה המותאמים אישית לצרכים שלכם.
-          הטיפולים שלנו מסייעים להפחתת מתחים, שיפור זרימת הדם, הקלה בכאבים ושיפור הרגשה כללית.
+       באפשרותך לזמן תור אונליין על המקום
         </Typography>
         
-        <Typography variant="body1">
-          לפרטים נוספים ותיאום טיפול, אנא צרו קשר.
-        </Typography>
+        <Box sx={{ mt: 4 }}>
+          <Button 
+            variant="contained" 
+            component={RouterLink} 
+            to="/booking" 
+            size="large"
+            sx={{ mx: 1 }}
+          >
+            זימון תור
+          </Button>
+          
+          {/* <Button 
+            variant="outlined" 
+            component={RouterLink} 
+            to="/leah-admin-portal" 
+            size="large"
+            sx={{ mx: 1, mt: { xs: 2, sm: 0 } }}
+          >
+            כניסה למטפלים
+          </Button> */}
+        </Box>
       </Paper>
     </Container>
   );
