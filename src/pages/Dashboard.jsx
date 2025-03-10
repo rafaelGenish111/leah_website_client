@@ -14,6 +14,7 @@ import TherapistDashboard from '../components/TherapistDashboard';
 import ArticleManager from '../components/dashboard/ArticleManager';
 import ArticleForm from '../components/dashboard/ArticleForm';
 import SessionTimeout from '../components/SessionTimeout'; 
+import GalleryManager from '../components/dashboard/GalleryManager';
 
 const Dashboard = () => {
   const { isAuthenticated, loading } = useAuth();
@@ -66,6 +67,7 @@ const Dashboard = () => {
         >
           <Tab label="הצהרות בריאות" />
           <Tab label="ניהול מאמרים" />
+          <Tab label="ניהול גלריה" />
         </Tabs>
       </Paper>
       
@@ -74,6 +76,7 @@ const Dashboard = () => {
         <Route path="/articles" element={<ArticleManager />} />
         <Route path="/articles/new" element={<ArticleForm />} />
         <Route path="/articles/edit/:id" element={<ArticleForm />} />
+        <Route path="/gallery" element={<GalleryManager />} />
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
       <SessionTimeout />
