@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ThemeProvider, CssBaseline, Box } from '@mui/material';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import theme from './theme/theme';
@@ -21,6 +21,11 @@ import Booking from './pages/Booking';
 const ADMIN_PATH = "leah-admin-portal"; // יש לשנות זאת לפי הצורך
 
 function App() {
+  useEffect(() => {
+    // בקשה קלה לשרת כדי "להעיר" אותו
+    fetch('https://leah-website-server.onrender.com/api/ping')
+      .catch(err => console.log('Wake-up ping error:', err));
+  }, []);
   return (
     <AuthProvider>
       <ThemeProvider theme={theme}>
