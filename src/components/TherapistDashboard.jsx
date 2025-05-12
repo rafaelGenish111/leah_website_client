@@ -71,10 +71,6 @@ const TherapistDashboard = () => {
   const handlePrintDeclaration = (declaration) => {
     const doc = new jsPDF();
     
-    // Add logo
-    // For actual implementation, you'd need to load the logo
-    // doc.addImage(logoData, 'PNG', 10, 10, 40, 40);
-    
     // Add title
     doc.setFont("helvetica", "bold");
     doc.setFontSize(20);
@@ -95,13 +91,18 @@ const TherapistDashboard = () => {
     
     let yPos = 110;
     const conditions = [
-      { key: 'heartProblems', label: 'בעיות לב' },
-      { key: 'highBloodPressure', label: 'לחץ דם גבוה' },
+      { key: 'skinDiseases', label: 'מחלות עור' },
+      { key: 'heartDiseases', label: 'מחלות לב' },
       { key: 'diabetes', label: 'סוכרת' },
+      { key: 'bloodPressure', label: 'לחץ דם' },
+      { key: 'spineProblems', label: 'בעיות בעמוד השדרה' },
+      { key: 'fracturesOrSprains', label: 'שברים/נקעים' },
+      { key: 'fluOrFever', label: 'שפעת/חום/דלקת' },
+      { key: 'epilepsy', label: 'אפילפסיה' },
+      { key: 'surgeries', label: 'ניתוחים' },
+      { key: 'chronicMedications', label: 'נוטל תרופות כרוניות' },
       { key: 'pregnancy', label: 'הריון' },
-      { key: 'recentSurgery', label: 'ניתוח לאחרונה' },
-      { key: 'skinConditions', label: 'בעיות עור' },
-      { key: 'allergies', label: 'אלרגיות' }
+      { key: 'otherConditions', label: 'בעיות רפואיות אחרות' }
     ];
     
     conditions.forEach(condition => {
@@ -110,8 +111,20 @@ const TherapistDashboard = () => {
       yPos += 10;
     });
     
-    if (declaration.healthConditions.other) {
-      doc.text(`אחר: ${declaration.healthConditions.other}`, 190, yPos, { align: "right" });
+    // Add additional details if applicable
+    if (declaration.healthConditions.chronicMedications && declaration.healthConditions.medicationDetails) {
+      doc.text(`פירוט תרופות כרוניות: ${declaration.healthConditions.medicationDetails}`, 190, yPos, { align: "right" });
+      yPos += 10;
+    }
+    
+    if (declaration.healthConditions.pregnancy) {
+      const pregnancyStage = declaration.healthConditions.pregnancyOverWeek14 ? "מעל שבוע 14" : "עד שבוע 14";
+      doc.text(`שלב הריון: ${pregnancyStage}`, 190, yPos, { align: "right" });
+      yPos += 10;
+    }
+    
+    if (declaration.healthConditions.otherConditions && declaration.healthConditions.otherDetails) {
+      doc.text(`פירוט בעיות רפואיות אחרות: ${declaration.healthConditions.otherDetails}`, 190, yPos, { align: "right" });
       yPos += 20;
     }
     
@@ -207,16 +220,31 @@ const TherapistDashboard = () => {
               <Typography>{`תאריך: ${formatDate(selectedDeclaration.date)}`}</Typography>
               
               <Typography variant="h6" gutterBottom sx={{ mt: 3 }}>מצבים רפואיים</Typography>
-              <Typography>{`בעיות לב: ${selectedDeclaration.healthConditions.heartProblems ? 'כן' : 'לא'}`}</Typography>
-              <Typography>{`לחץ דם גבוה: ${selectedDeclaration.healthConditions.highBloodPressure ? 'כן' : 'לא'}`}</Typography>
+              <Typography>{`מחלות עור: ${selectedDeclaration.healthConditions.skinDiseases ? 'כן' : 'לא'}`}</Typography>
+              <Typography>{`מחלות לב: ${selectedDeclaration.healthConditions.heartDiseases ? 'כן' : 'לא'}`}</Typography>
               <Typography>{`סוכרת: ${selectedDeclaration.healthConditions.diabetes ? 'כן' : 'לא'}`}</Typography>
-              <Typography>{`הריון: ${selectedDeclaration.healthConditions.pregnancy ? 'כן' : 'לא'}`}</Typography>
-              <Typography>{`ניתוח לאחרונה: ${selectedDeclaration.healthConditions.recentSurgery ? 'כן' : 'לא'}`}</Typography>
-              <Typography>{`בעיות עור: ${selectedDeclaration.healthConditions.skinConditions ? 'כן' : 'לא'}`}</Typography>
-              <Typography>{`אלרגיות: ${selectedDeclaration.healthConditions.allergies ? 'כן' : 'לא'}`}</Typography>
+              <Typography>{`לחץ דם: ${selectedDeclaration.healthConditions.bloodPressure ? 'כן' : 'לא'}`}</Typography>
+              <Typography>{`בעיות בעמוד השדרה: ${selectedDeclaration.healthConditions.spineProblems ? 'כן' : 'לא'}`}</Typography>
+              <Typography>{`שברים/נקעים: ${selectedDeclaration.healthConditions.fracturesOrSprains ? 'כן' : 'לא'}`}</Typography>
+              <Typography>{`שפעת/חום/דלקת: ${selectedDeclaration.healthConditions.fluOrFever ? 'כן' : 'לא'}`}</Typography>
+              <Typography>{`אפילפסיה: ${selectedDeclaration.healthConditions.epilepsy ? 'כן' : 'לא'}`}</Typography>
+              <Typography>{`ניתוחים: ${selectedDeclaration.healthConditions.surgeries ? 'כן' : 'לא'}`}</Typography>
+              <Typography>{`נוטל תרופות כרוניות: ${selectedDeclaration.healthConditions.chronicMedications ? 'כן' : 'לא'}`}</Typography>
               
-              {selectedDeclaration.healthConditions.other && (
-                <Typography>{`מצבים נוספים: ${selectedDeclaration.healthConditions.other}`}</Typography>
+              {selectedDeclaration.healthConditions.chronicMedications && selectedDeclaration.healthConditions.medicationDetails && (
+                <Typography>{`פירוט תרופות: ${selectedDeclaration.healthConditions.medicationDetails}`}</Typography>
+              )}
+              
+              <Typography>{`הריון: ${selectedDeclaration.healthConditions.pregnancy ? 'כן' : 'לא'}`}</Typography>
+              
+              {selectedDeclaration.healthConditions.pregnancy && (
+                <Typography>{`שלב הריון: ${selectedDeclaration.healthConditions.pregnancyOverWeek14 ? 'מעל שבוע 14' : 'עד שבוע 14'}`}</Typography>
+              )}
+              
+              <Typography>{`בעיות רפואיות אחרות: ${selectedDeclaration.healthConditions.otherConditions ? 'כן' : 'לא'}`}</Typography>
+              
+              {selectedDeclaration.healthConditions.otherConditions && selectedDeclaration.healthConditions.otherDetails && (
+                <Typography>{`פירוט בעיות רפואיות אחרות: ${selectedDeclaration.healthConditions.otherDetails}`}</Typography>
               )}
               
               <Typography variant="h6" gutterBottom sx={{ mt: 3 }}>חתימה</Typography>

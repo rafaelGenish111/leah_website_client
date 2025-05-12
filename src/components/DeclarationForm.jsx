@@ -8,7 +8,12 @@ import {
   Box, 
   Paper, 
   Grid,
-  FormGroup
+  FormGroup,
+  Radio,
+  RadioGroup,
+  FormControl,
+  FormLabel,
+  Collapse
 } from '@mui/material';
 import SignatureCanvas from './SignatureCanvas';
 import axios from 'axios';
@@ -22,14 +27,21 @@ const DeclarationForm = () => {
     idNumber: '',
     phone: '',
     healthConditions: {
-      heartProblems: false,
-      highBloodPressure: false,
+      skinDiseases: false,
+      heartDiseases: false,
       diabetes: false,
+      bloodPressure: false,
+      spineProblems: false,
+      fracturesOrSprains: false,
+      fluOrFever: false,
+      epilepsy: false,
+      surgeries: false,
+      chronicMedications: false,
+      medicationDetails: '',
       pregnancy: false,
-      recentSurgery: false,
-      skinConditions: false,
-      allergies: false,
-      other: ''
+      pregnancyOverWeek14: false,
+      otherConditions: false,
+      otherDetails: ''
     },
     confirmTruth: false,
     signature: ''
@@ -53,6 +65,17 @@ const DeclarationForm = () => {
         [name]: type === 'checkbox' ? checked : value
       }));
     }
+  };
+
+  const handleRadioChange = (e) => {
+    const value = e.target.value === 'true';
+    setFormData(prev => ({
+      ...prev,
+      healthConditions: {
+        ...prev.healthConditions,
+        pregnancyOverWeek14: value
+      }
+    }));
   };
 
   const handleSignatureChange = (signatureData) => {
@@ -131,22 +154,22 @@ const DeclarationForm = () => {
                   <FormControlLabel
                     control={
                       <Checkbox 
-                        checked={formData.healthConditions.heartProblems}
+                        checked={formData.healthConditions.skinDiseases}
                         onChange={handleChange}
-                        name="healthConditions.heartProblems"
+                        name="healthConditions.skinDiseases"
                       />
                     }
-                    label="בעיות לב"
+                    label="מחלות עור"
                   />
                   <FormControlLabel
                     control={
                       <Checkbox 
-                        checked={formData.healthConditions.highBloodPressure}
+                        checked={formData.healthConditions.heartDiseases}
                         onChange={handleChange}
-                        name="healthConditions.highBloodPressure"
+                        name="healthConditions.heartDiseases"
                       />
                     }
-                    label="לחץ דם גבוה"
+                    label="מחלות לב"
                   />
                   <FormControlLabel
                     control={
@@ -161,6 +184,78 @@ const DeclarationForm = () => {
                   <FormControlLabel
                     control={
                       <Checkbox 
+                        checked={formData.healthConditions.bloodPressure}
+                        onChange={handleChange}
+                        name="healthConditions.bloodPressure"
+                      />
+                    }
+                    label="לחץ דם"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox 
+                        checked={formData.healthConditions.spineProblems}
+                        onChange={handleChange}
+                        name="healthConditions.spineProblems"
+                      />
+                    }
+                    label="בעיות בעמוד השדרה"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox 
+                        checked={formData.healthConditions.fracturesOrSprains}
+                        onChange={handleChange}
+                        name="healthConditions.fracturesOrSprains"
+                      />
+                    }
+                    label="שברים/נקעים"
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox 
+                        checked={formData.healthConditions.fluOrFever}
+                        onChange={handleChange}
+                        name="healthConditions.fluOrFever"
+                      />
+                    }
+                    label="שפעת/חום/דלקת"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox 
+                        checked={formData.healthConditions.epilepsy}
+                        onChange={handleChange}
+                        name="healthConditions.epilepsy"
+                      />
+                    }
+                    label="אפילפסיה"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox 
+                        checked={formData.healthConditions.surgeries}
+                        onChange={handleChange}
+                        name="healthConditions.surgeries"
+                      />
+                    }
+                    label="ניתוחים"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox 
+                        checked={formData.healthConditions.chronicMedications}
+                        onChange={handleChange}
+                        name="healthConditions.chronicMedications"
+                      />
+                    }
+                    label="נוטל תרופות כרוניות"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox 
                         checked={formData.healthConditions.pregnancy}
                         onChange={handleChange}
                         name="healthConditions.pregnancy"
@@ -168,52 +263,67 @@ const DeclarationForm = () => {
                     }
                     label="הריון"
                   />
-                </Grid>
-                <Grid item xs={12} sm={6}>
                   <FormControlLabel
                     control={
                       <Checkbox 
-                        checked={formData.healthConditions.recentSurgery}
+                        checked={formData.healthConditions.otherConditions}
                         onChange={handleChange}
-                        name="healthConditions.recentSurgery"
+                        name="healthConditions.otherConditions"
                       />
                     }
-                    label="ניתוח לאחרונה"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox 
-                        checked={formData.healthConditions.skinConditions}
-                        onChange={handleChange}
-                        name="healthConditions.skinConditions"
-                      />
-                    }
-                    label="בעיות עור"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox 
-                        checked={formData.healthConditions.allergies}
-                        onChange={handleChange}
-                        name="healthConditions.allergies"
-                      />
-                    }
-                    label="אלרגיות"
+                    label="בעיות רפואיות אחרות"
                   />
                 </Grid>
               </Grid>
 
-              <TextField
-                fullWidth
-                label="מצבים רפואיים נוספים"
-                name="healthConditions.other"
-                value={formData.healthConditions.other}
-                onChange={handleChange}
-                dir="rtl"
-                multiline
-                rows={2}
-                sx={{ mt: 2 }}
-              />
+              {/* פרטים נוספים לתרופות כרוניות */}
+              <Collapse in={formData.healthConditions.chronicMedications} timeout="auto">
+                <Box sx={{ mt: 2, mb: 2, pl: 3, pr: 3 }}>
+                  <TextField
+                    fullWidth
+                    label="פירוט תרופות כרוניות"
+                    name="healthConditions.medicationDetails"
+                    value={formData.healthConditions.medicationDetails}
+                    onChange={handleChange}
+                    dir="rtl"
+                    multiline
+                    rows={2}
+                  />
+                </Box>
+              </Collapse>
+
+              {/* אפשרויות הריון */}
+              <Collapse in={formData.healthConditions.pregnancy} timeout="auto">
+                <Box sx={{ mt: 2, mb: 2, pl: 3, pr: 3 }}>
+                  <FormControl component="fieldset">
+                    <FormLabel component="legend">שבוע הריון:</FormLabel>
+                    <RadioGroup
+                      row
+                      value={formData.healthConditions.pregnancyOverWeek14.toString()}
+                      onChange={handleRadioChange}
+                    >
+                      <FormControlLabel value="false" control={<Radio />} label="עד שבוע 14" />
+                      <FormControlLabel value="true" control={<Radio />} label="מעל שבוע 14" />
+                    </RadioGroup>
+                  </FormControl>
+                </Box>
+              </Collapse>
+
+              {/* בעיות רפואיות אחרות */}
+              <Collapse in={formData.healthConditions.otherConditions} timeout="auto">
+                <Box sx={{ mt: 2, mb: 2, pl: 3, pr: 3 }}>
+                  <TextField
+                    fullWidth
+                    label="פירוט בעיות רפואיות אחרות"
+                    name="healthConditions.otherDetails"
+                    value={formData.healthConditions.otherDetails}
+                    onChange={handleChange}
+                    dir="rtl"
+                    multiline
+                    rows={2}
+                  />
+                </Box>
+              </Collapse>
             </FormGroup>
           </Grid>
 
